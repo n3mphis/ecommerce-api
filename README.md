@@ -115,7 +115,7 @@ Todos los endpoints están bajo el prefijo `/api`. Los endpoints protegidos requ
 | Products   | DELETE | `/api/products/{id}`     | Elimina un producto.                     | Rol ADMIN             |
 | Cart       | POST   | `/api/cart/add`          | Agrega un producto al carrito.           | Rol USER              |
 | Cart       | GET    | `/api/cart`              | Retorna el contenido del carrito.        | Rol USER              |
-| Checkout   | POST   | `/api/cart/checkout`     | Procesa el checkout del carrito.         | Rol USER              |
+| Orders     | POST   | `/api/cart/checkout`     |Procesa el checkout del carrito y crea un pedido.| Rol USER              |
 
 ### Ejemplo de Uso
 Para iniciar sesión y obtener un JWT:
