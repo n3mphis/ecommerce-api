@@ -92,6 +92,12 @@ Copia el resultado y úsalo como `JWT_SECRET`.
    ```
    Nota: Cierra y vuelve a abrir la consola después de usar `setx`.
 
+ ## Configurar application.properties:
+   Copia el archivo `application-example.properties` a `application.properties`:
+   ```bash
+   cp application-example.properties src/main/resources/application.properties
+   ```
+
 **Nota**: Los valores por defecto son solo para pruebas locales. En producción, configura tus propias variables de entorno con valores seguros.
 
 ## 🔑 Endpoints de la API
@@ -124,6 +130,7 @@ Respuesta:
   "token": "eyJhbGciOiJIUzI1NiIs..."
 }
 ```
+### **Nota**: Los endpoints fueron probados usando Insomnia para garantizar su correcto funcionamiento.
 
 ## 📝 Notas
 - Este proyecto fue desarrollado como parte de mi portafolio para demostrar habilidades en Spring Boot, Spring Security, y JWT como desarrollador Java junior.
