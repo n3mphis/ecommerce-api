@@ -30,6 +30,9 @@ public class User {
     @Column(nullable = false)
     private Role role;
 
+    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private Cart cart;
+
     public User(String email, String password, Role role) {
         this.email = email;
         this.password = password;
