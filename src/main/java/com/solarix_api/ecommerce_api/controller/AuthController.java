@@ -27,16 +27,14 @@ public class AuthController {
 
     private final UserService userService;
     private final JwtService jwtService;
-    private final UserRepository userRepository;
 
-    public AuthController(UserService userService, JwtService jwtService, UserRepository userRepository) {
+    public AuthController(UserService userService, JwtService jwtService) {
         this.userService = userService;
         this.jwtService = jwtService;
-        this.userRepository = userRepository;
     }
 
     @PostMapping("/auth/registrar")
-    public ResponseEntity<RegisterResponse> registrarUsuario(@RequestBody @Valid RegistrarRequest registrarRequest) {
+    public ResponseEntity<RegisterResponse> registrarUsuario(@RequestBody @Valid RegistrarRequest registrarRequest, Role role) {
         User user = userService.registrarUsuario(registrarRequest, Role.USER);
         RegisterResponse response = new RegisterResponse(user.getEmail());
         URI location = ServletUriComponentsBuilder.fromCurrentRequest()
