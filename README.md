@@ -1,4 +1,4 @@
-# 🏪 Comprar en Sólis API REST: E-commerce, Inventario y JWT
+# 🏪 Comprar en Sólix API REST: E-commerce, Inventario y JWT
 
 Una API REST robusta construida con Spring Boot 3 para la gestión de usuarios, roles, autenticación mediante JSON Web Tokens (JWT), inventario de productos, carrito de compras y checkout. La aplicación utiliza Spring Security para proteger endpoints, Spring Data JPA para persistencia de datos, y H2 como base de datos en memoria para desarrollo. Las configuraciones sensibles se manejan mediante variables de entorno, con valores por defecto para pruebas locales.
 
