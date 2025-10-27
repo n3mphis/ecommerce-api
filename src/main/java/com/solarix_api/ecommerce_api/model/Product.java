@@ -27,14 +27,14 @@ public class Product {
 
     @Column(nullable = false)
     // Precio del producto
-    private BigDecimal price;
+    private double price;
 
     @Min(value = 0, message = "El stock no puede ser negativo")
-    @Column(unique = true, nullable = false)
+    @Column(name = "stock")
     // Cantidad disponible en inventario
-    private int stock;
+    private Integer stock;
 
-    public Product(String name, BigDecimal price, int stock) {
+    public Product(String name, double price, int stock) {
         this.name = name;
         this.price = price;
         this.stock = stock;
