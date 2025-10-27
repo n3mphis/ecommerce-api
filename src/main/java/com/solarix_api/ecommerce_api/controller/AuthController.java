@@ -7,19 +7,14 @@ import com.solarix_api.ecommerce_api.dto.RegistrarRequest;
 import com.solarix_api.ecommerce_api.exception.EmailYaRegistradoException;
 import com.solarix_api.ecommerce_api.model.Role;
 import com.solarix_api.ecommerce_api.model.User;
-import com.solarix_api.ecommerce_api.repository.UserRepository;
 import com.solarix_api.ecommerce_api.security.JwtService;
 import com.solarix_api.ecommerce_api.service.UserService;
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.net.URI;
-import java.util.HashMap;
-import java.util.Map;
 
 @RestController
 @RequestMapping("/api")

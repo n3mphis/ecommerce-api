@@ -22,12 +22,8 @@ public class CartItem {
     // Carrito al que pertenece este item
     private Cart cart;
 
-    @ManyToOne
     @JoinColumn(name = "producto_id", nullable = false)
     // Producto en el carrito
-    private Product product;
-
-    @Column(nullable = false)
     private Long productId;
 
     @Min(value = 1, message = "La cantidad debe ser mayor a 0")
@@ -35,9 +31,9 @@ public class CartItem {
     // Indica la cantidad del producto
     private int quantity;
 
-    public CartItem(Cart cart, Product product, int quantity) {
+    public CartItem(Cart cart, Long productId, int quantity) {
         this.cart = cart;
-        this.product = product;
+        this.productId = productId;
         this.quantity = quantity;
     }
 }
