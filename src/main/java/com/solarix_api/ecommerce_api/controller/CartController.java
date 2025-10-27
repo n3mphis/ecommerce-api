@@ -4,7 +4,10 @@ import com.solarix_api.ecommerce_api.dto.CartItemResponse;
 import com.solarix_api.ecommerce_api.dto.CartResponse;
 import com.solarix_api.ecommerce_api.dto.ProductoRequest;
 import com.solarix_api.ecommerce_api.exception.EmailNoEncontradoException;
+import com.solarix_api.ecommerce_api.exception.ProductoNoEncontradoException;
 import com.solarix_api.ecommerce_api.model.Cart;
+import com.solarix_api.ecommerce_api.model.Product;
+import com.solarix_api.ecommerce_api.repository.ProductRepository;
 import com.solarix_api.ecommerce_api.service.CartService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -20,9 +23,11 @@ import java.util.stream.Collectors;
 @RequestMapping("/api/cart")
 public class CartController {
     private final CartService cartService;
+    private final ProductRepository productRepository;
 
-    public CartController(CartService cartService) {
+    public CartController(CartService cartService, ProductRepository productRepository) {
         this.cartService = cartService;
+        this.productRepository = productRepository;
     }
 
     @PostMapping("/add")
@@ -42,10 +47,26 @@ public class CartController {
             CartResponse response = new CartResponse(
                     cart.getId(),
                     cart.getItems().stream()
-                            .map(item -> new CartItemResponse(item.getProductId(),
-                                    item.getQuantity()))
-                            .collect(Collectors.toList()));
+                            .map(item -> {
+                                Product product = productRepository.findById(item.getProductId())
+                                        .orElseThrow(() -> new ProductoNoEncontradoException("Producto no fue encontrado:" + item.getProductId()));
 
+                                return new CartItemResponse(
+                                        item.getProductId(),
+                                        product.getName(),
+                                        item.getQuantity(),
+                                        product.getPrice()
+                                );
+                            })
+                            .collect(Collectors.toList()),
+                    cart.getItems().stream()
+                            .mapToDouble(item -> {
+                                Product product = productRepository.findById(item.getProductId())
+                                        .orElseThrow(() -> new ProductoNoEncontradoException("Producto no encontrado: " + item.getProductId()));
+                                return product.getPrice() * item.getQuantity();
+                            })
+                            .sum()
+            );
             return ResponseEntity.ok(response);
 
         } catch (EmailNoEncontradoException e) {

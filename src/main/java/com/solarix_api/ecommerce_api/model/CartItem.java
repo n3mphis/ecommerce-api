@@ -22,7 +22,7 @@ public class CartItem {
     // Carrito al que pertenece este item
     private Cart cart;
 
-    @JoinColumn(name = "producto_id", nullable = false)
+    @Column(name = "producto_id", nullable = false)
     // Producto en el carrito
     private Long productId;
 
