@@ -27,6 +27,9 @@ public class CartItem {
     // Producto en el carrito
     private Product product;
 
+    @Column(nullable = false)
+    private Long productId;
+
     @Min(value = 1, message = "La cantidad debe ser mayor a 0")
     @Column(nullable = false)
     // Indica la cantidad del producto
