@@ -107,7 +107,6 @@ Todos los endpoints están bajo el prefijo `/api`. Los endpoints protegidos requ
 |------------|--------|--------------------------|------------------------------------------|------------------------|
 | Auth       | POST   | `/api/auth/registrar`    | Registra un nuevo usuario.               | Sin autenticación      |
 | Auth       | POST   | `/api/auth/login`        | Obtiene un JWT válido con credenciales.  | Sin autenticación      |
-| Users      | GET    | `/api/users/me`          | Retorna el carrito del usuario autenticado. | Rol USER            |
 | Admin      | GET    | `/api/admin/users`       | Lista todos los usuarios del sistema.    | Rol ADMIN             |
 | Products   | GET    | `/api/products`          | Lista todos los productos.               | Rol ADMIN             |
 | Products   | POST   | `/api/products`          | Crea un nuevo producto.                  | Rol ADMIN             |
