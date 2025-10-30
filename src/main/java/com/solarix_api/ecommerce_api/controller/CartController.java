@@ -12,10 +12,7 @@ import com.solarix_api.ecommerce_api.service.CartService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.stream.Collectors;
 
@@ -71,6 +68,38 @@ public class CartController {
 
         } catch (EmailNoEncontradoException e) {
             throw new EmailNoEncontradoException("El email: " + email + " no fue encontrado");
+        }
+    }
+
+    @GetMapping("/me")
+    public ResponseEntity<CartResponse> verCarrito() {
+        String email = SecurityContextHolder.getContext().getAuthentication().getName();
+
+        try {
+            Cart cart = cartService.retornarContenidoDelCarrito(email);
+            CartResponse response = new CartResponse(
+                    cart.getId(),
+                    cart.getItems().stream()
+                            .map(item -> {
+                                Product product = productRepository.findById(item.getProductId())
+                                        .orElseThrow(() -> new ProductoNoEncontradoException("Producto no encontrado " + item.getProductId()));
+                                return new CartItemResponse(product.getId(),
+                                        product.getName(),
+                                        product.getStock(),
+                                        product.getPrice());
+                            })
+                            .collect(Collectors.toList()),
+                    cart.getItems().stream()
+                            .mapToDouble(item -> {
+                                Product product = productRepository.findById(item.getProductId())
+                                        .orElseThrow(() -> new ProductoNoEncontradoException("Producto no encontrado: " + item.getProductId()));
+                                return product.getPrice() * item.getQuantity();
+                            })
+                            .sum()
+            );
+                    return ResponseEntity.ok(response);
+        } catch (Exception e) {
+            return ResponseEntity.status(404).build();
         }
     }
 }

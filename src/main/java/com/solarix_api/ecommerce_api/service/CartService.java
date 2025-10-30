@@ -1,5 +1,6 @@
 package com.solarix_api.ecommerce_api.service;
 
+import com.solarix_api.ecommerce_api.exception.CarritoVacioException;
 import com.solarix_api.ecommerce_api.exception.EmailNoEncontradoException;
 import com.solarix_api.ecommerce_api.exception.ProductoNoEncontradoException;
 import com.solarix_api.ecommerce_api.model.Cart;
@@ -13,6 +14,7 @@ import com.solarix_api.ecommerce_api.repository.UserRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.List;
 
 @Service
 public class CartService {
@@ -65,5 +67,10 @@ public class CartService {
         }
 
         return cartRepository.save(cart);
+    }
+
+    public Cart retornarContenidoDelCarrito(String email) {
+        return cartRepository.findByUserEmail(email)
+                .orElseThrow(() -> new EmailNoEncontradoException("El email: " + email + " no fue encontrado"));
     }
 }
