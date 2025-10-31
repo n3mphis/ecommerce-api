@@ -2,6 +2,7 @@ package com.solarix_api.ecommerce_api.service;
 
 import com.solarix_api.ecommerce_api.dto.ProductResponse;
 import com.solarix_api.ecommerce_api.dto.ProductUpdateRequest;
+import com.solarix_api.ecommerce_api.dto.ProductoCreateRequest;
 import com.solarix_api.ecommerce_api.dto.UsersResponse;
 import com.solarix_api.ecommerce_api.exception.ProductoNoEncontradoException;
 import com.solarix_api.ecommerce_api.exception.SinProductosAgregados;
@@ -98,12 +99,33 @@ public class AdminService {
                 productoGuardado.getStock());
     }
 
-    public ResponseEntity<Void> eliminarProducto(Long id) {
+    public void eliminarProducto(Long id) {
         Product product = productRepository.findById(id)
                 .orElseThrow(() -> new ProductoNoEncontradoException("El producto con id: "
                 + id + " no fue encontrado"));
 
         productRepository.delete(product);
-        return null;
+    }
+
+    @Transactional
+    public ProductResponse crearNuevoProducto(ProductoCreateRequest request) {
+        if (request.name() == null || request.name().trim().isEmpty()) {
+            throw new IllegalArgumentException("El nombre es obligatorio");
+        }
+        if (request.price() == null || request.price() <= 0) {
+            throw new IllegalArgumentException("El precio debe ser mayor a 0");
+        }
+        if (request.stock() == null || request.stock() < 0) {
+            throw new IllegalArgumentException("El stock debe ser mayor a 0");
+        }
+
+        Product product = new Product(request.name(), request.price(), request.stock());
+
+        Product productoGuardado = productRepository.save(product);
+
+        return new ProductResponse(productoGuardado.getId(),
+                productoGuardado.getName(),
+                productoGuardado.getPrice(),
+                productoGuardado.getStock());
     }
 }
