@@ -8,6 +8,8 @@ import org.hibernate.annotations.CreationTimestamp;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "pedidos")
@@ -39,9 +41,14 @@ public class Order {
     // Fecha de creación
     private LocalDateTime createdAt;
 
-    public Order(User user, BigDecimal total, Estado estado) {
+    @OneToMany(mappedBy = "order", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<OrderItem> items;
+
+    public Order(User user, BigDecimal total, Estado estado,
+                 List<OrderItem> items) {
         this.user = user;
         this.total = total;
-        this.estado = estado;
+        this.estado = Estado.PENDIENTE;
+        this.items = new ArrayList<>();
     }
 }

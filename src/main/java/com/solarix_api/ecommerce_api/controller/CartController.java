@@ -2,13 +2,13 @@ package com.solarix_api.ecommerce_api.controller;
 
 import com.solarix_api.ecommerce_api.dto.CartItemResponse;
 import com.solarix_api.ecommerce_api.dto.CartResponse;
+import com.solarix_api.ecommerce_api.dto.CheckoutResponse;
 import com.solarix_api.ecommerce_api.dto.ProductoRequest;
-import com.solarix_api.ecommerce_api.exception.EmailNoEncontradoException;
-import com.solarix_api.ecommerce_api.exception.ProductoNoEncontradoException;
-import com.solarix_api.ecommerce_api.model.Cart;
-import com.solarix_api.ecommerce_api.model.Product;
+import com.solarix_api.ecommerce_api.exception.*;
+import com.solarix_api.ecommerce_api.model.*;
 import com.solarix_api.ecommerce_api.repository.ProductRepository;
 import com.solarix_api.ecommerce_api.service.CartService;
+import com.solarix_api.ecommerce_api.service.OrderService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -21,10 +21,13 @@ import java.util.stream.Collectors;
 public class CartController {
     private final CartService cartService;
     private final ProductRepository productRepository;
+    private final OrderService orderService;
 
-    public CartController(CartService cartService, ProductRepository productRepository) {
+    public CartController(CartService cartService, ProductRepository productRepository,
+                          OrderService orderService) {
         this.cartService = cartService;
         this.productRepository = productRepository;
+        this.orderService = orderService;
     }
 
     @PostMapping("/add")
@@ -46,7 +49,9 @@ public class CartController {
                     cart.getItems().stream()
                             .map(item -> {
                                 Product product = productRepository.findById(item.getProductId())
-                                        .orElseThrow(() -> new ProductoNoEncontradoException("Producto no fue encontrado:" + item.getProductId()));
+                                        .orElseThrow(() ->
+                                                new ProductoNoEncontradoException("Producto no fue encontrado:"
+                                                        + item.getProductId()));
 
                                 return new CartItemResponse(
                                         item.getProductId(),
@@ -59,7 +64,9 @@ public class CartController {
                     cart.getItems().stream()
                             .mapToDouble(item -> {
                                 Product product = productRepository.findById(item.getProductId())
-                                        .orElseThrow(() -> new ProductoNoEncontradoException("Producto no encontrado: " + item.getProductId()));
+                                        .orElseThrow(() ->
+                                                new ProductoNoEncontradoException("Producto no encontrado: "
+                                                        + item.getProductId()));
                                 return product.getPrice() * item.getQuantity();
                             })
                             .sum()
@@ -101,5 +108,12 @@ public class CartController {
         } catch (Exception e) {
             return ResponseEntity.status(404).build();
         }
+    }
+
+    @PostMapping("/checkout")
+    public ResponseEntity<CheckoutResponse> checkout() throws InterruptedException {
+        String email = SecurityContextHolder.getContext().getAuthentication().getName();
+        CheckoutResponse response = orderService.checkout(email);
+        return ResponseEntity.ok(response);
     }
 }

@@ -19,7 +19,7 @@ public class OrderItem {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "pedido_id", nullable = false)
     // Pedido al que pertenece este item
     private Order order;
@@ -37,10 +37,9 @@ public class OrderItem {
     @Min(value = 0, message = "El precio no puede ser negativo")
     @Column(nullable = false)
     // Precio unitario al momento del pedido
-    private BigDecimal precio;
+    private double precio;
 
-    public OrderItem(Order order, Product product, int cantidad, BigDecimal precio) {
-        this.order = order;
+    public OrderItem(Product product, int cantidad, double precio) {
         this.product = product;
         this.cantidad = cantidad;
         this.precio = precio;
