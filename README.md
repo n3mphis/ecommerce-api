@@ -108,10 +108,10 @@ Todos los endpoints están bajo el prefijo `/api`. Los endpoints protegidos requ
 | Auth       | POST   | `/api/auth/registrar`    | Registra un nuevo usuario.               | Sin autenticación      |
 | Auth       | POST   | `/api/auth/login`        | Obtiene un JWT válido con credenciales.  | Sin autenticación      |
 | Admin      | GET    | `/api/admin/users`       | Lista todos los usuarios del sistema.    | Rol ADMIN             |
-| Products   | GET    | `/api/products`          | Lista todos los productos.               | Rol ADMIN             |
+| Products   | GET    | `/api/products/list`          | Lista todos los productos.               | Rol ADMIN             |
 | Products   | POST   | `/api/products`          | Crea un nuevo producto.                  | Rol ADMIN             |
-| Products   | PUT    | `/api/products/{id}`     | Actualiza un producto existente.         | Rol ADMIN             |
-| Products   | DELETE | `/api/products/{id}`     | Elimina un producto.                     | Rol ADMIN             |
+| Products   | PUT    | `/api/products/update/{id}`     | Actualiza un producto existente.         | Rol ADMIN             |
+| Products   | DELETE | `/api/products/delete/{id}`     | Elimina un producto.                     | Rol ADMIN             |
 | Cart       | POST   | `/api/cart/add`          | Agrega un producto al carrito.           | Rol USER              |
 | Cart       | GET    | `/api/cart`              | Retorna el contenido del carrito.        | Rol USER              |
 | Orders     | POST   | `/api/cart/checkout`     |Procesa el checkout del carrito y crea un pedido.| Rol USER              |
