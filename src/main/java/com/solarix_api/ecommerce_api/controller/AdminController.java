@@ -1,5 +1,6 @@
 package com.solarix_api.ecommerce_api.controller;
 
+import com.solarix_api.ecommerce_api.dto.ProductResponse;
 import com.solarix_api.ecommerce_api.dto.UsersResponse;
 import com.solarix_api.ecommerce_api.model.User;
 import com.solarix_api.ecommerce_api.service.AdminService;
@@ -23,5 +24,10 @@ public class AdminController {
     @GetMapping("/users")
     public ResponseEntity<List<UsersResponse>> todosLosUsuarios() {
         return ResponseEntity.ok(adminService.listarTodosLosUsuarios());
+    }
+
+    @GetMapping("/products")
+    public ResponseEntity<List<ProductResponse>> todosLosProductos() {
+        return ResponseEntity.ok(adminService.listarTodosLosProductos());
     }
 }
