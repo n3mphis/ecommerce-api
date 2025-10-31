@@ -1,7 +1,9 @@
 package com.solarix_api.ecommerce_api.service;
 
 import com.solarix_api.ecommerce_api.dto.ProductResponse;
+import com.solarix_api.ecommerce_api.dto.ProductUpdateRequest;
 import com.solarix_api.ecommerce_api.dto.UsersResponse;
+import com.solarix_api.ecommerce_api.exception.ProductoNoEncontradoException;
 import com.solarix_api.ecommerce_api.exception.SinProductosAgregados;
 import com.solarix_api.ecommerce_api.exception.UsuarioNoEncontradoException;
 import com.solarix_api.ecommerce_api.model.Product;
@@ -9,7 +11,9 @@ import com.solarix_api.ecommerce_api.model.User;
 import com.solarix_api.ecommerce_api.repository.OrderRepository;
 import com.solarix_api.ecommerce_api.repository.ProductRepository;
 import com.solarix_api.ecommerce_api.repository.UserRepository;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -68,5 +72,38 @@ public class AdminService {
         }
 
         return productsResponse;
+    }
+
+    @Transactional
+    public ProductResponse actualizarProducto(Long id, ProductUpdateRequest request) {
+        Product product = productRepository.findById(id)
+                .orElseThrow(() -> new ProductoNoEncontradoException("El producto con id: " +
+                        id + " no fue encontrado"));
+
+        if (request.productName() != null) {
+            product.setName(request.productName());
+        }
+        if (request.price() != null && request.price() > 0) {
+            product.setPrice(request.price());
+        }
+        if (request.stock() != null && request.stock() > 0) {
+            product.setStock(request.stock());
+        }
+
+        Product productoGuardado = productRepository.save(product);
+
+        return new ProductResponse(productoGuardado.getId(),
+                productoGuardado.getName(),
+                productoGuardado.getPrice(),
+                productoGuardado.getStock());
+    }
+
+    public ResponseEntity<Void> eliminarProducto(Long id) {
+        Product product = productRepository.findById(id)
+                .orElseThrow(() -> new ProductoNoEncontradoException("El producto con id: "
+                + id + " no fue encontrado"));
+
+        productRepository.delete(product);
+        return null;
     }
 }
