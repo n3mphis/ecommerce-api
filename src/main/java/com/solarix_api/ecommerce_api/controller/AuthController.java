@@ -9,6 +9,7 @@ import com.solarix_api.ecommerce_api.model.Role;
 import com.solarix_api.ecommerce_api.model.User;
 import com.solarix_api.ecommerce_api.security.JwtService;
 import com.solarix_api.ecommerce_api.service.UserService;
+import io.swagger.v3.oas.annotations.Operation;
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

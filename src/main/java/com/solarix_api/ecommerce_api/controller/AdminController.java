@@ -4,16 +4,13 @@ import com.solarix_api.ecommerce_api.dto.ProductResponse;
 import com.solarix_api.ecommerce_api.dto.ProductUpdateRequest;
 import com.solarix_api.ecommerce_api.dto.ProductoCreateRequest;
 import com.solarix_api.ecommerce_api.dto.UsersResponse;
-import com.solarix_api.ecommerce_api.model.Product;
-import com.solarix_api.ecommerce_api.model.User;
 import com.solarix_api.ecommerce_api.service.AdminService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
-
-import java.net.URI;
 import java.util.List;
 
 @RestController
@@ -27,17 +24,20 @@ public class AdminController {
     }
 
     @GetMapping("/users")
+    @Operation(security = @SecurityRequirement(name = "Bearer Authentication"))
     public ResponseEntity<List<UsersResponse>> todosLosUsuarios() {
         return ResponseEntity.ok(adminService.listarTodosLosUsuarios());
     }
 
     @GetMapping("/products/list")
+    @Operation(security = @SecurityRequirement(name = "Bearer Authentication"))
     public ResponseEntity<List<ProductResponse>> todosLosProductos() {
         return ResponseEntity.ok(adminService.listarTodosLosProductos());
     }
 
     @PutMapping("/products/update/{id}")
     @PreAuthorize("hasRole('ADMIN')")
+    @Operation(security = @SecurityRequirement(name = "Bearer Authentication"))
     public ResponseEntity<ProductResponse> actualizarProducto(@PathVariable Long id, @RequestBody ProductUpdateRequest request) {
         ProductResponse productResponse = adminService.actualizarProducto(id, request);
         return ResponseEntity.ok(productResponse);
@@ -45,6 +45,7 @@ public class AdminController {
 
     @DeleteMapping("/products/delete/{id}")
     @PreAuthorize("hasROle('ADMIN')")
+    @Operation(security = @SecurityRequirement(name = "Bearer Authentication"))
     public ResponseEntity<Void> eliminarProducto(@PathVariable Long id) {
         adminService.eliminarProducto(id);
         return ResponseEntity.noContent().build();
@@ -52,6 +53,7 @@ public class AdminController {
 
     @PostMapping("/products/create")
     @PreAuthorize("hasRole('ADMIN')")
+    @Operation(security = @SecurityRequirement(name = "Bearer Authentication"))
     public ResponseEntity<ProductResponse> crearProducto(@RequestBody @Valid ProductoCreateRequest request) {
         ProductResponse creado = adminService.crearNuevoProducto(request);
         return ResponseEntity.status(201).body(creado);
