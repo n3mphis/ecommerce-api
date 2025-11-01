@@ -42,7 +42,7 @@ Sigue estos pasos para levantar la API en tu entorno local:
 
 
 ### Luego Registrarse con usuario y contraseña
-https://prnt.sc/ar0JHj5LDPvj
+
 
 
 ## 🛠️ Configuración de Variables de Entorno
