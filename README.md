@@ -39,11 +39,19 @@ Sigue estos pasos para levantar la API en tu entorno local:
    ```bash
    mvn spring-boot:run
    ```
+5. **Ingresar a Swagger**:
+   
+   `http://localhost:8080/swagger-ui/index.html`
+6. **Registrarte con email y contraseña**:
 
+   ![Captura de pantalla de la interfaz de Swagger UI para registrar.](/assets/registrar.png)
+7. **Hacer el Login con el email y la contraseña**:
 
-### Luego Registrarse con usuario y contraseña
+   ![Captura de pantalla de la interfaz de Swagger UI para login.](/assets/login.png)
 
+8. **Copiar el token generado y pegarlo en Authorize**:
 
+   ![Captura de pantalla de la interfaz de Swagger UI para autorizar]()   
 
 ## 🛠️ Configuración de Variables de Entorno
 La API utiliza variables de entorno para configurar JWT. Si no configuras estas variables, la aplicación usará valores por defecto definidos en `application.properties` (solo para desarrollo).
