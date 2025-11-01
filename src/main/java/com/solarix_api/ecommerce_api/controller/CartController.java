@@ -20,6 +20,7 @@ import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api/cart")
+@SecurityRequirement(name = "Bearer Authentication")
 public class CartController {
     private final CartService cartService;
     private final ProductRepository productRepository;
@@ -34,7 +35,6 @@ public class CartController {
 
     @PostMapping("/add")
     @PreAuthorize("hasRole('USER')")
-    @Operation(security = @SecurityRequirement(name = "Bearer Authentication"))
     public ResponseEntity<CartResponse> agregarProducto(@RequestBody ProductoRequest productoRequest) {
         String email = SecurityContextHolder.getContext()
                 .getAuthentication()
@@ -82,7 +82,6 @@ public class CartController {
     }
 
     @GetMapping("/me")
-    @Operation(security = @SecurityRequirement(name = "Bearer Authentication"))
     public ResponseEntity<CartResponse> verCarrito() {
         String email = SecurityContextHolder.getContext().getAuthentication().getName();
 
@@ -115,7 +114,6 @@ public class CartController {
     }
 
     @PostMapping("/checkout")
-    @Operation(security = @SecurityRequirement(name = "Bearer Authentication"))
     public ResponseEntity<CheckoutResponse> checkout() throws InterruptedException {
         String email = SecurityContextHolder.getContext().getAuthentication().getName();
         CheckoutResponse response = orderService.checkout(email);

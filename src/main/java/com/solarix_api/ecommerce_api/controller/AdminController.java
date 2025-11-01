@@ -15,6 +15,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/admin")
+@SecurityRequirement(name = "Bearer Authentication")
 public class AdminController {
 
     private final AdminService adminService;
@@ -24,20 +25,17 @@ public class AdminController {
     }
 
     @GetMapping("/users")
-    @Operation(security = @SecurityRequirement(name = "Bearer Authentication"))
     public ResponseEntity<List<UsersResponse>> todosLosUsuarios() {
         return ResponseEntity.ok(adminService.listarTodosLosUsuarios());
     }
 
     @GetMapping("/products/list")
-    @Operation(security = @SecurityRequirement(name = "Bearer Authentication"))
     public ResponseEntity<List<ProductResponse>> todosLosProductos() {
         return ResponseEntity.ok(adminService.listarTodosLosProductos());
     }
 
     @PutMapping("/products/update/{id}")
     @PreAuthorize("hasRole('ADMIN')")
-    @Operation(security = @SecurityRequirement(name = "Bearer Authentication"))
     public ResponseEntity<ProductResponse> actualizarProducto(@PathVariable Long id, @RequestBody ProductUpdateRequest request) {
         ProductResponse productResponse = adminService.actualizarProducto(id, request);
         return ResponseEntity.ok(productResponse);
@@ -45,7 +43,6 @@ public class AdminController {
 
     @DeleteMapping("/products/delete/{id}")
     @PreAuthorize("hasROle('ADMIN')")
-    @Operation(security = @SecurityRequirement(name = "Bearer Authentication"))
     public ResponseEntity<Void> eliminarProducto(@PathVariable Long id) {
         adminService.eliminarProducto(id);
         return ResponseEntity.noContent().build();
@@ -53,7 +50,6 @@ public class AdminController {
 
     @PostMapping("/products/create")
     @PreAuthorize("hasRole('ADMIN')")
-    @Operation(security = @SecurityRequirement(name = "Bearer Authentication"))
     public ResponseEntity<ProductResponse> crearProducto(@RequestBody @Valid ProductoCreateRequest request) {
         ProductResponse creado = adminService.crearNuevoProducto(request);
         return ResponseEntity.status(201).body(creado);

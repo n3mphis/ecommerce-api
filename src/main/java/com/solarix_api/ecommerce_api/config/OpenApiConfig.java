@@ -17,7 +17,8 @@ public class OpenApiConfig {
                 .info(new Info()
                         .title("Solarix E-commerce API")
                         .version("1.0")
-                        .description("API REST para e-commerce con JWT, carrito y checkout"))
+                        .description("API REST para e-commerce con JWT, carrito y checkout")
+                )
                 .components(new Components()
                         .addSecuritySchemes("Bearer Authentication", createAPIKeyScheme()));
     }
