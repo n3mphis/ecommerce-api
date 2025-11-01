@@ -10,6 +10,7 @@ Una API REST robusta construida con Spring Boot 3 para la gestión de usuarios, 
 - Java JWT
 - Lombok
 - Java 17
+- Swagger OpenAPI
 
 ## 💻 Requisitos Previos
 Antes de ejecutar la aplicación, asegúrate de tener instalado:
@@ -38,8 +39,19 @@ Sigue estos pasos para levantar la API en tu entorno local:
    ```bash
    mvn spring-boot:run
    ```
+5. **Ingresar a Swagger**:
+   
+   `http://localhost:8080/swagger-ui/index.html`
+6. **Registrarte con email y contraseña**:
 
-La API se iniciará en `http://localhost:8080/api`. La consola de H2 está disponible en `http://localhost:8080/api/h2-console` para inspeccionar la base de datos.
+   ![Captura de pantalla de la interfaz de Swagger UI para registrar.](/assets/registrar.png)
+7. **Hacer el Login con el email y la contraseña**:
+
+   ![Captura de pantalla de la interfaz de Swagger UI para login.](/assets/login.png)
+
+8. **Copiar el token generado y pegarlo en Authorize**:
+
+   ![Captura de pantalla de la interfaz de Swagger UI para autorizar]()   
 
 ## 🛠️ Configuración de Variables de Entorno
 La API utiliza variables de entorno para configurar JWT. Si no configuras estas variables, la aplicación usará valores por defecto definidos en `application.properties` (solo para desarrollo).
@@ -116,7 +128,7 @@ Todos los endpoints están bajo el prefijo `/api`. Los endpoints protegidos requ
 | Cart       | GET    | `/api/cart`              | Retorna el contenido del carrito.        | Rol USER              |
 | Orders     | POST   | `/api/cart/checkout`     |Procesa el checkout del carrito y crea un pedido.| Rol USER              |
 
-### Ejemplo de Uso
+### Ejemplo de Uso utilizando la linea de comandos
 Para iniciar sesión y obtener un JWT:
 ```bash
 curl -X POST http://localhost:8080/api/auth/login \
@@ -129,6 +141,7 @@ Respuesta:
   "token": "eyJhbGciOiJIUzI1NiIs..."
 }
 ```
+
 ### **Nota**: Los endpoints fueron probados usando Insomnia para garantizar su correcto funcionamiento.
 
 ## 📝 Notas
