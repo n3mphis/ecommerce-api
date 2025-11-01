@@ -10,6 +10,7 @@ Una API REST robusta construida con Spring Boot 3 para la gestión de usuarios, 
 - Java JWT
 - Lombok
 - Java 17
+- Swagger OpenAPI
 
 ## 💻 Requisitos Previos
 Antes de ejecutar la aplicación, asegúrate de tener instalado:
@@ -39,7 +40,10 @@ Sigue estos pasos para levantar la API en tu entorno local:
    mvn spring-boot:run
    ```
 
-La API se iniciará en `http://localhost:8080/api`. La consola de H2 está disponible en `http://localhost:8080/api/h2-console` para inspeccionar la base de datos.
+
+### Luego Registrarse con usuario y contraseña
+https://prnt.sc/ar0JHj5LDPvj
+
 
 ## 🛠️ Configuración de Variables de Entorno
 La API utiliza variables de entorno para configurar JWT. Si no configuras estas variables, la aplicación usará valores por defecto definidos en `application.properties` (solo para desarrollo).
@@ -116,7 +120,7 @@ Todos los endpoints están bajo el prefijo `/api`. Los endpoints protegidos requ
 | Cart       | GET    | `/api/cart`              | Retorna el contenido del carrito.        | Rol USER              |
 | Orders     | POST   | `/api/cart/checkout`     |Procesa el checkout del carrito y crea un pedido.| Rol USER              |
 
-### Ejemplo de Uso
+### Ejemplo de Uso utilizando la linea de comandos
 Para iniciar sesión y obtener un JWT:
 ```bash
 curl -X POST http://localhost:8080/api/auth/login \
@@ -129,6 +133,7 @@ Respuesta:
   "token": "eyJhbGciOiJIUzI1NiIs..."
 }
 ```
+
 ### **Nota**: Los endpoints fueron probados usando Insomnia para garantizar su correcto funcionamiento.
 
 ## 📝 Notas
