@@ -17,41 +17,23 @@ Antes de ejecutar la aplicación, asegúrate de tener instalado:
 1. Java Development Kit (JDK) 17 o superior
 2. Apache Maven 3.x (para la gestión de dependencias)
 
-## ▶️ Ejecución y Puesta en Marcha
+## Pruebas con Swagger UI (RECOMENDADO)
+La forma más fácil de probar la API:
 
-Sigue estos pasos para levantar la API en tu entorno local:
-
-1. **Clonar el Repositorio**:
-   ```bash
-   git clone https://github.com/tuUsuario/ecommerce-api.git
-   cd ecommerce-api
-   ```
-
-2. **Instalar Dependencias**:
-   ```bash
-   mvn clean install
-   ```
-
-3. **Configurar Variables de Entorno**:
-   Consulta la sección "Configuración de Variables de Entorno" para definir las variables necesarias.
-
-4. **Ejecutar la Aplicación**:
-   ```bash
-   mvn spring-boot:run
-   ```
-5. **Ingresar a Swagger**:
+1. Ingresa a Swagger: `http://localhost:8080/swagger-ui/index.html`
+2. Registrarte:
    
-   `http://localhost:8080/swagger-ui/index.html`
-6. **Registrarte con email y contraseña**:
+   ![Caputa de la interfaz de Swagger UI para registrarte](/assets/registrar.png)
 
-   ![Captura de pantalla de la interfaz de Swagger UI para registrar.](/assets/registrar.png)
-7. **Hacer el Login con el email y la contraseña**:
+3. Iniciar Sesión:
 
-   ![Captura de pantalla de la interfaz de Swagger UI para login.](/assets/login.png)
+   ![Captura de la interfaz de Swagger UI para iniciar sesion](/assets/login.png)
 
-8. **Copiar el token generado y pegarlo en Authorize**:
+4. Autorizar los endponts:
 
-   ![Captura de pantalla de la interfaz de Swagger UI para autorizar]()   
+   Copiar el token generado y pegarlo en Authorize
+
+   ![Captura del token generado](/assets/authorize.png)
 
 ## 🛠️ Configuración de Variables de Entorno
 La API utiliza variables de entorno para configurar JWT. Si no configuras estas variables, la aplicación usará valores por defecto definidos en `application.properties` (solo para desarrollo).
