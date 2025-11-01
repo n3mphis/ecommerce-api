@@ -130,6 +130,3 @@ Respuesta:
 - Este proyecto fue desarrollado como parte de mi portafolio para demostrar habilidades en Spring Boot, Spring Security, y JWT como desarrollador Java junior.
 - La base de datos H2 se usa para pruebas locales. Para producción, se recomienda configurar una base de datos como PostgreSQL.
 - Las pruebas unitarias están implementadas con `spring-boot-starter-test`.
-
-## 📜 Licencia
-MIT License - consulta el archivo `LICENSE` para más detalles.
